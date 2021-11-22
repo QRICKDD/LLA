@@ -12,20 +12,27 @@ import PROPOSE_ATTACK
 import LOCAL_ATT_HSJA_ATTACK
 
 MODE = "TIMIT"
-abs_path=r"F:\SR-ATK"
+abs_path=os.getcwd()
 is_test=False
 
 model = Sincnet.get_speaker_model(MODE)
 speaker_label, label_speaker = Sincnet.get_speaker_label(MODE)
 
+def mkd(name):
+    if os.path.exist(name)==False:
+        os.mkdir(os.path.join(abs_path,name))
 if MODE=="Librispeech":
     save_dir = "myresult\lib"
     save_adv_dir="myresult\libaudio"
+    mkd(save_dir)
+    mkd(save_adv_dir)
     attackdir = r"AttackDataset\lib-attack-audio"
     targetdir = r"AttackDataset\lib-target-audio"
 else:
     save_dir = r"myresult\timit"
     save_adv_dir = r"myresult\timitaudio"
+    mkd(save_dir)
+    mkd(save_adv_dir)
     attackdir = r"AttackDataset\timit-attack-audio"
     targetdir = r"AttackDataset\timit-target-audio"
 o_audio_files = os.listdir(attackdir)

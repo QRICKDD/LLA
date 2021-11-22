@@ -19,8 +19,13 @@ The code for our paper runs with Python 3.8 and requires Pytorch of version 1.8.
 # Running in Windows or Ubuntu
 ​```python
 git clone https://github.com/QRICKDD/LLA.git
+
 cd LLA
+
 python run PROPOSE_RUN.py
+
 python run SIGN_OPT_RUN.py
+
 python run HSJA_ATTACK_RUN.py
+
 ​```

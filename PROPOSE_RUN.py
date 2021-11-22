@@ -11,9 +11,7 @@ import os
 import PROPOSE_ATTACK
 import LOCAL_ATT_HSJA_ATTACK
 
-# 初始化模型 模型在gpu上
-
-MODE = "Librispeech"
+MODE = "TIMIT"
 abs_path=r"F:\SR-ATK"
 is_test=False
 

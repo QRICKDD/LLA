@@ -10,8 +10,6 @@ import utils
 import os
 import LOCAL_ATT_HSJA_ATTACK
 
-# 初始化模型 模型在gpu上
-
 MODE = "TIMIT"
 abs_path=r"F:\SR-ATK"
 

@@ -12,15 +12,19 @@ import os
 # 初始化模型 模型在gpu上
 
 MODE = "Librispeech"
-abs_path=r"F:\SR-ATK"
+abs_path=os.getcwd()
 is_test=False
 
 model = Sincnet.get_speaker_model(MODE)
 speaker_label, label_speaker = Sincnet.get_speaker_label(MODE)
-
+def mkd(name):
+    if os.path.exist(name)==False:
+        os.mkdir(os.path.join(abs_path,name))
 if MODE=="Librispeech":
     save_dir = "signresult\lib"
     save_adv_dir= "signresult\libaudio"
+    mkd(save_dir)
+    mkd(save_adv_dir)
     attackdir = r"AttackDataset\lib-attack-audio"
     targetdir = r"AttackDataset\lib-target-audio"
     o_audio_files = os.listdir(attackdir)
@@ -30,6 +34,8 @@ if MODE=="Librispeech":
 else:
     save_dir = r"signresult\timit"
     save_adv_dir = r"signresult\timitaudio"
+    mkd(save_dir)
+    mkd(save_adv_dir)
     attackdir = r"AttackDataset\timit-attack-audio"
     targetdir = r"AttackDataset\timit-target-audio"
     o_audio_files = os.listdir(attackdir)

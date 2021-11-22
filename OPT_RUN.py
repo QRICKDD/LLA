@@ -10,7 +10,6 @@ import pickle
 import utils
 import os
 
-# 初始化模型 模型在gpu上
 
 MODE = "TIMIT"
 abs_path=r"F:\SR-ATK"

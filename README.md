@@ -1,5 +1,5 @@
 # Local Low-frequency Attack
-Code for Decision-Based Attack to Speaker Recognition System via Local Low-Frequency Perturbation by Jiacheng Deng, Li Done.
+Code for Decision-Based Attack to Speaker Recognition System via Local Low-Frequency Perturbation by Jiacheng Deng, Li Dong.
 
 ![avatar](https://s3.bmp.ovh/imgs/2021/11/5612c130ea4f8dc9.jpg)
 

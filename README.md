@@ -42,10 +42,11 @@ See `PROPOSE_RUN.py`, `HSJA_RUN.py` and `SIGN_OPT_RUN.py` for details.
 
 # Additional experiments on whether gender affects attack efficiency
 
-The experiment tested male speakers MBCG0 and MABC0 and female speakers C and D in the TIMIT data set- Indicates that the required query budget exceeds 25K.
-The experimental results show that the same-sex attacks are more successful than the directional attacks between different genders.
+The experiment tested male speakers MBCG0 and MABC0 and female speakers ELMA0 and FLMA0 in the TIMIT dataset, where - - Indicates that the required query budget exceeds 25K.
 
-![avatar](https://github.com/QRICKDD/LLA/blob/master/picture/gender_picture1.png)
+The experimental results show that the inner-gender attacks are more successful than the targeted attacks between different genders.
 
-![avatar](https://github.com/QRICKDD/LLA/blob/master/picture/gender_picture_l2.png)
+![avatar](https://github.com/QRICKDD/LLA/blob/master/picture/diffgender25k.png)
+
+![avatar](https://github.com/QRICKDD/LLA/blob/master/picture/diffgenderl3.png)
 

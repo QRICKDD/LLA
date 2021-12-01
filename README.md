@@ -46,7 +46,10 @@ The experiment tested male speakers MBCG0 and MABC0 and female speakers ELMA0 an
 
 The experimental results show that the inner-gender attacks are more successful than the targeted attacks between different genders.
 
-![avatar](https://github.com/QRICKDD/LLA/blob/master/picture/diffgender25k.png)
+![avatar](https://s3.bmp.ovh/imgs/2021/12/037b49f152e5a206.png)
 
-![avatar](https://github.com/QRICKDD/LLA/blob/master/picture/diffgenderl3.png)
+![avatar](https://s3.bmp.ovh/imgs/2021/12/ff5eaecc68fa8cb8.png)
+
+Relevant audio files are saved in the FMAttackDataset folder.
+
 

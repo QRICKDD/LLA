@@ -1,13 +1,13 @@
 # Local Low-frequency Attack
 Code for Decision-Based Attack to Speaker Recognition System via Local Low-Frequency Perturbation by Jiacheng Deng, Li Dong.
 
-![avatar](https://s3.bmp.ovh/imgs/2021/11/5612c130ea4f8dc9.jpg)
+![avatar](https://raw.githubusercontent.com/QRICKDD/LLA/master/picture/temp_picture.png)
 
 Comparison of different attacking methods. Top row: from the left to right are the source audio, target audio and their residuals.
-Second row to the last row: the results for ours, HSJA, and SIGN-OPT; from the left to the right are results for 5K, 15K and 25K queries. For comparison, the adversarial perturbation (orange) is plotted, superimposing on the residual(blue). Better view in color version.
+Second row to the last row: the results for ours, HSJA, QEBA-F, and SIGN-OPT; from the left to the right are results for 5K, 15K and 25K queries. For comparison, the adversarial perturbation (orange) is plotted, superimposing on the residual(blue). Better view in color version.
 
 # About Prefiles
-All pre-train models and files and be accessed from [Cloud Disk](https://drive.google.com/drive/folders/1RMaPPxeuwSoyGXAMV4E3vnLu1Q-p5M2x?usp=sharing).
+Prefiles can be accessed from [Cloud Disk](https://drive.google.com/drive/folders/1RMaPPxeuwSoyGXAMV4E3vnLu1Q-p5M2x?usp=sharing).
 
 After downloading, please put them in the prefile folder.
 
@@ -16,7 +16,7 @@ The code for our paper runs with Python 3.8 and requires Pytorch of version 1.8.
 * numpy
 * soudfile
 * torchaudio
-* pytorch
+* pytorch-cuda
 
 # Running in Docker, MacOS or Ubuntu
 We provide as an example the source code to run LLA Attack on a SincNet trained on TIMIT and Librispeech. Run the following commands in shell:
@@ -33,12 +33,14 @@ python run PROPOSE_RUN.py
 python run HSJA_ATTACK_RUN.py
 # Carry out SIGN-OPT attack based targeted attack on provided samples.
 python run SIGN_OPT_RUN.py
+# Carry out QEBA-F attack based targeted attack on provided samples.
+python run QEBA_F_RUN.py
 
 # Results are stored in myresult/lib or hsjaresult/timit or signresult/lib.
 # For each perturbed audio, save in myresult/libaudio or myresult/timitaudio.
 ```
 
-See `PROPOSE_RUN.py`, `HSJA_RUN.py` and `SIGN_OPT_RUN.py` for details. 
+See `PROPOSE_RUN.py`, `HSJA_RUN.py`, `QEBA_F_RUN.py` and `SIGN_OPT_RUN.py` for details. 
 
 # Additional experiments on whether gender affects attack efficiency
 

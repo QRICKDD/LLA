@@ -47,7 +47,7 @@ def get_success_rate(all_data,thresold):
             sr_list.append(num/all_num)
     fin_rate=0
     for item in all_data:
-        if item[25000-1]<thresold:
+        if item[25000-2]<thresold:
             fin_rate+=1
     q_list=q_list+[25000]
     sr_list=sr_list+[fin_rate/all_num]
@@ -55,6 +55,10 @@ def get_success_rate(all_data,thresold):
     return q_list,sr_list
 
 def getmean_list(all_num_list):
+    for idx,item in enumerate(all_num_list):
+        if len(item)!=25000:
+            item=item+[item[-1]]
+            all_num_list[idx]=item
     return np.mean(all_num_list, axis=0).tolist()
 
 def buquan(dir_name,start_value):
@@ -93,22 +97,23 @@ def get_all_test(path):
     return res
 
 ABS_ROOT="F:\SR-ATK"
-source_timit_dir=r"sampleaudio\timit-attack-audio"
-target_timit_dir=r"sampleaudio\timit-target-audio"
-source_lib_dir=r"sampleaudio\lib-attack-audio"
-target_lib_dir=r"sampleaudio\lib-target-audio"
+source_timit_dir=r"用于画图sampleaudio\timit-attack-audio"
+target_timit_dir=r"用于画图sampleaudio\timit-target-audio"
+source_lib_dir=r"用于画图sampleaudio\lib-attack-audio"
+target_lib_dir=r"用于画图sampleaudio\lib-target-audio"
 
 #下面写绝对路径
-HSJA_dir_TIMIT=r"F:\SR-ATK\hsjaresult\timit"
-HSJA_dir_Lib=r"F:\SR-ATK\hsjaresult\lib"
+HSJA_dir_TIMIT=r"F:\SR-ATK\用于画图hsjaresult\timit"
+HSJA_dir_Lib=r"F:\SR-ATK\用于画图hsjaresult\lib"
 
-SIGN_dir_TIMIT=r"F:\SR-ATK\signresult\timit"
-SIGN_dir_Lib=r"F:\SR-ATK\signresult\lib"
+SIGN_dir_TIMIT=r"F:\SR-ATK\用于画图signresult\timit"
+SIGN_dir_Lib=r"F:\SR-ATK\用于画图signresult\lib"
 
-MY_dir_TIMIT=r"F:\SR-ATK\myresult2\timit"
-MY_dir_Lib=r"F:\SR-ATK\myresult2\lib"
+MY_dir_TIMIT=r"F:\SR-ATK\用于画图myresult\timit"
+MY_dir_Lib=r"F:\SR-ATK\用于画图myresult\lib"
 
-
+QEBA_dir_TIMIT=r"F:\SR-ATK\2022218\QEBA\timit"
+QEBA_dir_Lib=r"F:\SR-ATK\2022218\QEBA\lib"
 
 o_all_timit_audios=os.listdir(os.path.join(ABS_ROOT,source_timit_dir))
 #排序代码填充
@@ -147,6 +152,7 @@ def get_init_distance(id,MODE):
         if item.startswith("{}-".format(id)):
             ta=os.path.join(temp_abs_target_dir,item)
             break
+    #print(oa)
     o,sr=sf.read(oa)
     t, sr = sf.read(ta)
     o/=np.linalg.norm(o,np.inf)
@@ -181,10 +187,12 @@ def get_all_buquan(TIMIT_path,Lib_path):
 
 
 
+
 #获取全部数据
 HSJA_TIMIT_VALUES,HSJA_LIB_VALUES=get_all_buquan(HSJA_dir_TIMIT,HSJA_dir_Lib)
 SIGN_TIMIT_VALUES,SIGN_LIB_VALUES=get_all_buquan(SIGN_dir_TIMIT,SIGN_dir_Lib)
 MY_TIMIT_VALUES,MY_LIB_VALUES=get_all_buquan(MY_dir_TIMIT,MY_dir_Lib)
+QEBA_TIMIT_VALUES,QEBA_LIB_VALUES=get_all_buquan(QEBA_dir_TIMIT,QEBA_dir_Lib)
 
 #获取最大最小线条
 HSJA_TIMIT_MIN=getminnum_list(HSJA_TIMIT_VALUES)
@@ -199,22 +207,24 @@ HSJA_LIB_MAX=getmaxnum_list(HSJA_LIB_VALUES)
 SIGN_LIB_MIN=getminnum_list(SIGN_LIB_VALUES)
 SIGN_LIB_MAX=getmaxnum_list(SIGN_LIB_VALUES)
 MY_LIB_MIN=getminnum_list(MY_LIB_VALUES)
-MY_LIB_MAX=getminnum_list(MY_LIB_VALUES)
+MY_LIB_MAX=getmaxnum_list(MY_LIB_VALUES)
 # MEAN TIMIT
 HSJA_TIMIT_MEAN=getmean_list(HSJA_TIMIT_VALUES)
 SIGN_TIMIT_MEAN=getmean_list(SIGN_TIMIT_VALUES)
 MY_TIMIT_MEAN=getmean_list(MY_TIMIT_VALUES)
+QEBA_TIMIT_MEAN=getmean_list(QEBA_TIMIT_VALUES)
 # MEAN LIB
 HSJA_LIB_MEAN=getmean_list(HSJA_LIB_VALUES)
 SIGN_LIB_MEAN=getmean_list(SIGN_LIB_VALUES)
 MY_LIB_MEAN=getmean_list(MY_LIB_VALUES)
-
+QEBA_LIB_MEAN=getmean_list(QEBA_LIB_VALUES)
 print("HSJA_TIMIT_MEAN[0],[5k],[15k],[25k]:",HSJA_TIMIT_MEAN[0],"\t",HSJA_TIMIT_MEAN[5000],"\t",HSJA_TIMIT_MEAN[15000],"\t",HSJA_TIMIT_MEAN[25000-1])
 print("HSJA_LIB_MEAN[0],[5k],[15k],[25k]:",HSJA_LIB_MEAN[0],"\t",HSJA_LIB_MEAN[5000],"\t",HSJA_LIB_MEAN[15000],"\t",HSJA_LIB_MEAN[25000-1])
 print("SIGN_TIMIT_MEAN[0],[5k],[15k],[25k]:",SIGN_TIMIT_MEAN[0],"\t",SIGN_TIMIT_MEAN[5000],"\t",SIGN_TIMIT_MEAN[15000],"\t",SIGN_TIMIT_MEAN[25000-1])
 print("SIGN_LIB_MEAN[0],[5k],[15k],[25k]:",SIGN_LIB_MEAN[0],"\t",SIGN_LIB_MEAN[5000],"\t",SIGN_LIB_MEAN[15000],"\t",SIGN_LIB_MEAN[25000-1])
 print("MY_TIMIT_MEAN[0],[5k],[15k],[25k]:",MY_TIMIT_MEAN[0],"\t",MY_TIMIT_MEAN[5000],"\t",MY_TIMIT_MEAN[15000],"\t",MY_TIMIT_MEAN[25000-1])
 print("MY_LIB_MEAN[0],[5k],[15k],[25k]:",MY_LIB_MEAN[0],"\t",MY_LIB_MEAN[5000],"\t",MY_LIB_MEAN[15000],"\t",MY_LIB_MEAN[25000-1])
+print("QEBA_TIMIT_MEAN[0],[5k],[15k],[25k]:",QEBA_TIMIT_MEAN[0],"\t",QEBA_TIMIT_MEAN[5000],"\t",QEBA_TIMIT_MEAN[15000],"\t",QEBA_TIMIT_MEAN[25000-1])
 # Success rate
 THRESOLD=3
 HQ_T_2,HSJA_TIMIT_SR_2=get_success_rate(HSJA_TIMIT_VALUES,thresold=THRESOLD)
@@ -223,6 +233,8 @@ SQ_T_2,SIGN_TIMIT_SR_2=get_success_rate(SIGN_TIMIT_VALUES,thresold=THRESOLD)
 SQ_T_1,SIGN_TIMIT_SR_1=get_success_rate(SIGN_TIMIT_VALUES,thresold=THRESOLD-1)
 MQ_T_2,MY_TIMIT_SR_2=get_success_rate(MY_TIMIT_VALUES,thresold=THRESOLD)
 MQ_T_1,MY_TIMIT_SR_1=get_success_rate(MY_TIMIT_VALUES,thresold=THRESOLD-1)
+QQ_T_2,QEBA_TIMIT_SR_2=get_success_rate(QEBA_TIMIT_VALUES,thresold=THRESOLD)
+QQ_T_1,QEBA_TIMIT_SR_1=get_success_rate(QEBA_TIMIT_VALUES,thresold=THRESOLD-1)
 # LIB
 THRESOLD=3
 HQ_L_2,HSJA_LIB_SR_2=get_success_rate(HSJA_LIB_VALUES,thresold=THRESOLD)
@@ -231,7 +243,8 @@ SQ_L_2,SIGN_LIB_SR_2=get_success_rate(SIGN_LIB_VALUES,thresold=THRESOLD)
 SQ_L_1,SIGN_LIB_SR_1=get_success_rate(SIGN_LIB_VALUES,thresold=THRESOLD-1)
 MQ_L_2,MY_LIB_SR_2=get_success_rate(MY_LIB_VALUES,thresold=THRESOLD)
 MQ_L_1,MY_LIB_SR_1=get_success_rate(MY_LIB_VALUES,thresold=THRESOLD-1)
-
+QQ_L_2,QEBA_LIB_SR_2=get_success_rate(QEBA_LIB_VALUES,thresold=THRESOLD)
+QQ_L_1,QEBA_LIB_SR_1=get_success_rate(QEBA_LIB_VALUES,thresold=THRESOLD-1)
 
 
 print("HSJA-LIB")
@@ -283,9 +296,9 @@ for v in MY_TIMIT_SR_1:
     print(v,"\t",end="")
 
 # 1 [TIMIT distance] 2 [Lib distance] 3 [TIMIT ] 4
-IS_MID=3
+IS_MID=10
 fontsize=18
-psdi=r"F:\SR-ATK\picture"
+psdi=r"F:\SR-ATK\用于画图picture"
 if IS_MID==1:
     #绘制图1
     # # #两条曲线之间的区域
@@ -495,9 +508,110 @@ elif IS_MID==6:
     plt.tight_layout()
     plt.savefig(os.path.join(psdi,'LibriSpeech_query_efficient.pdf'), bbox_inches='tight', dpi=800)
     plt.show()
+elif IS_MID==7:
+    #绘制图7
+    fig=plt.figure(figsize=(7,6))
+    ax=fig.add_subplot(111)
+    ax.set_yticks([0,3,6,9,12,15])
+    ax.set_xticks([0,5000,10000,15000,20000,25000])
+    ax.set_yticklabels([0, 3,6,9,12,15], fontsize=fontsize)
+    ax.set_xticklabels([0,"5k","10k","15k","20k","25k"],fontsize=fontsize)
+    plt.ylim(0,15)
+    plt.xlim(0,25000)
+
+    p1,=plt.plot(HSJA_TIMIT_MEAN,c='black',linewidth=2.0,linestyle="-.")
+    p2,=plt.plot(SIGN_TIMIT_MEAN,c='black',linewidth=2.0)
+    p3,=plt.plot(MY_TIMIT_MEAN,c='red',linewidth=2.0)
+    p4, = plt.plot(QEBA_TIMIT_MEAN, c='red', linewidth=2.0,linestyle="-.")
+    plt.legend([p1, p2,p3,p4], ["HSJA","SIGN-OPT","Proposed","QEBA-F"], loc='upper right',fontsize=fontsize)
+
+    plt.xlabel("Queries",fontsize=fontsize)
+    plt.ylabel("$L_2$ Distance",fontsize=fontsize)
+    plt.title(r"TIMIT",fontsize=fontsize)
+    plt.tight_layout()
+    plt.savefig(os.path.join(psdi,'ADD_QEBA_TIMIT_distance_mean.pdf'), bbox_inches='tight', dpi=800)
+    plt.show()
+elif IS_MID==8:
+    #绘制图2
+    fig = plt.figure(figsize=(7,6))
+    ax2=fig.add_subplot(111)
+    ax2.set_yticks([0,3,6,9,12,15])
+    ax2.set_xticks([0,5000,10000,15000,20000,25000])
+    ax2.set_yticklabels([0, 3, 6, 9, 12, 15], fontsize=fontsize)
+    ax2.set_xticklabels([0, "5k", "10k", "15k", "20k", "25k"], fontsize=fontsize)
+    plt.ylim(0,15)
+    plt.xlim(0,25000)
+
+    p3,=plt.plot(HSJA_LIB_MEAN,c='black',linewidth=2.0,linestyle="-.")
+    p4,=plt.plot(SIGN_LIB_MEAN,c='black',linewidth=2.0)
+    p5,=plt.plot(MY_LIB_MEAN,c='red',linewidth=2.0)
+    p7, = plt.plot(QEBA_LIB_MEAN, c='red', linewidth=2.0,linestyle="-.")
+    plt.legend([p3, p4,p5,p7], ["HSJA","SIGN-OPT","Proposed","QEBA-F"], loc='upper right',fontsize=fontsize)
 
 
+    plt.xlabel("Queries",fontsize=fontsize)
+    plt.ylabel("$L_2$ Distance",fontsize=fontsize)
+    plt.title(r"LibriSpeech",fontsize=fontsize)
 
+    plt.tight_layout()
+    plt.savefig(os.path.join(psdi,'QEBA_ADD_LIB_distance_mean.pdf'), bbox_inches='tight', dpi=800)
+    plt.show()
+elif IS_MID == 9:
+    # 绘制图3
+    fig = plt.figure(figsize=(7, 6))
+    ax2 = fig.add_subplot(111)
+    ax2.set_yticks([0, 0.25, 0.5, 0.75, 1])
+    ax2.set_xticks([0, 5000, 10000, 15000, 20000, 25000])
+    ax2.set_yticklabels([0, 0.25, 0.5, 0.75, 1], fontsize=fontsize)
+    ax2.set_xticklabels([0, "5k", "10k", "15k", "20k", "25k"], fontsize=fontsize)
+    plt.ylim(0, 1)
+    plt.xlim(0, 25000)
+
+    # p3,=plt.plot(HQ_T_1,HSJA_TIMIT_SR_1,c='black',linewidth=2.0,linestyle="-.")
+    # p4,=plt.plot(SQ_T_1,SIGN_TIMIT_SR_1,c='black',linewidth=2.0)
+    # p5,=plt.plot(MQ_T_1,MY_TIMIT_SR_1,c='red',linewidth=2.0)
+    p3, = plt.plot(HQ_T_2, HSJA_TIMIT_SR_2, c='black', linewidth=2.0, linestyle="-.")
+    p4, = plt.plot(SQ_T_2, SIGN_TIMIT_SR_2, c='black', linewidth=2.0)
+    p5, = plt.plot(MQ_T_2, MY_TIMIT_SR_2, c='red', linewidth=2.0)
+    p6, = plt.plot(QQ_T_2, QEBA_TIMIT_SR_2, c='red', linewidth=2.0,linestyle="-.")
+    plt.legend([p3, p4, p5,p6], ["HSJA", "SIGN-OPT", "Proposed", "QEBA-F"], loc='upper left', fontsize=fontsize)
+
+    plt.xlabel("Queries", fontsize=fontsize)
+    # plt.ylabel("Success rate $l_2$<2",fontsize=fontsize)
+    plt.ylabel("Success rate $L_2$<3", fontsize=fontsize)
+    plt.title(r"TIMIT", fontsize=fontsize)
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(psdi, 'QEBA_ADD_TIMIT_SR-2.pdf'), bbox_inches='tight', dpi=800)
+    plt.show()
+elif IS_MID == 10:
+    # 绘制图3
+    fig = plt.figure(figsize=(7, 6))
+    ax2 = fig.add_subplot(111)
+    ax2.set_yticks([0, 0.25, 0.5, 0.75, 1])
+    ax2.set_xticks([0, 5000, 10000, 15000, 20000, 25000])
+    ax2.set_yticklabels([0, 0.25, 0.5, 0.75, 1], fontsize=fontsize)
+    ax2.set_xticklabels([0, "5k", "10k", "15k", "20k", "25k"], fontsize=fontsize)
+    plt.ylim(0, 1)
+    plt.xlim(0, 25000)
+
+    # p3,=plt.plot(HQ_T_1,HSJA_TIMIT_SR_1,c='black',linewidth=2.0,linestyle="-.")
+    # p4,=plt.plot(SQ_T_1,SIGN_TIMIT_SR_1,c='black',linewidth=2.0)
+    # p5,=plt.plot(MQ_T_1,MY_TIMIT_SR_1,c='red',linewidth=2.0)
+    p3, = plt.plot(HQ_L_2, HSJA_LIB_SR_2, c='black', linewidth=2.0, linestyle="-.")
+    p4, = plt.plot(SQ_L_2, SIGN_LIB_SR_2, c='black', linewidth=2.0)
+    p5, = plt.plot(MQ_L_2, MY_LIB_SR_2, c='red', linewidth=2.0)
+    p6, = plt.plot(QQ_L_2, QEBA_LIB_SR_2, c='red', linewidth=2.0,linestyle="-.")
+    plt.legend([p3, p4, p5,p6], ["HSJA", "SIGN-OPT", "Proposed", "QEBA-F"], loc='upper left', fontsize=fontsize)
+
+    plt.xlabel("Queries", fontsize=fontsize)
+    # plt.ylabel("Success rate $l_2$<2",fontsize=fontsize)
+    plt.ylabel("Success rate $L_2$<3", fontsize=fontsize)
+    plt.title(r"LibriSpeech", fontsize=fontsize)
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(psdi, 'QEBA_ADD_LIB_SR-2.pdf'), bbox_inches='tight', dpi=800)
+    plt.show()
 
 
 

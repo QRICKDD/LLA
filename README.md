@@ -54,4 +54,6 @@ The experimental results show that the inner-gender attacks are more successful 
 
 Relevant audio files are saved in the FMAttackDataset folder.
 
+# About my other work and paper
+https://gitee.com/djc_QRICK
 

@@ -29,12 +29,7 @@ cd LLA
 ############################################### 
 # Carry out LLA attack based targeted attack on provided samples.
 python run PROPOSE_RUN.py
-# Carry out HSJA attack based targeted attack on provided samples.
-python run HSJA_ATTACK_RUN.py
-# Carry out SIGN-OPT attack based targeted attack on provided samples.
-python run SIGN_OPT_RUN.py
-# Carry out QEBA-F attack based targeted attack on provided samples.
-python run QEBA_F_RUN.py
+
 
 # Results are stored in myresult/lib or hsjaresult/timit or signresult/lib.
 # For each perturbed audio, save in myresult/libaudio or myresult/timitaudio.
